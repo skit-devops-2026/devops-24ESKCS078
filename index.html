@@ -5,74 +5,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OptiRoutine | Scientific Habit & Procrastination Prevention Engine</title>
     <meta name="description" content="OptiRoutine is a behavioral-science backed productivity system that uses context-aware notifications and BJ Fogg's MAP model to prevent procrastination.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0a0612',
+                        cardbg: '#140f23',
+                        lighttext: '#f3f0f7',
+                        graytext: '#a39bb8',
+                        purple1: '#9d4edd',
+                        purple2: '#7b2cbf'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     <link rel="stylesheet" href="index.css">
 </head>
-<body>
-    <header>
-        <div class="nav-container">
-            <a href="index.html" class="logo" id="brand-logo">
-                ⚡ <span>OptiRoutine</span>
+<body class="bg-darkbg text-lighttext leading-relaxed">
+
+    <header class="sticky top-0 z-50 bg-darkbg/80 backdrop-blur border-b border-white/10 py-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center px-6">
+            <a href="index.html" class="text-2xl font-bold text-lighttext no-underline" id="brand-logo">
+                ⚡ <span class="text-purple1">OptiRoutine</span>
             </a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active" id="nav-home">Home</a></li>
-                <li><a href="dashboard.html" id="nav-dashboard">Dashboard</a></li>
-                <li><a href="routines.html" id="nav-routines">Routines</a></li>
-                <li><a href="analytics.html" id="nav-analytics">Analytics</a></li>
+            <ul class="flex gap-6 list-none text-sm font-medium">
+                <li><a href="index.html" class="text-white underline" id="nav-home">Home</a></li>
+                <li><a href="dashboard.html" class="text-graytext hover:text-white" id="nav-dashboard">Dashboard</a></li>
+                <li><a href="routines.html" class="text-graytext hover:text-white" id="nav-routines">Routines</a></li>
+                <li><a href="analytics.html" class="text-graytext hover:text-white" id="nav-analytics">Analytics</a></li>
             </ul>
         </div>
     </header>
 
-    <main>
-        <section class="hero-section" id="hero-area">
-            <h1>Stop Tracking Habits.<br><span class="hero-gradient-text">Start Actively Intervening.</span></h1>
-            <p class="hero-subtitle">
+    <main class="max-w-6xl mx-auto px-5 py-10">
+
+        <section class="text-center py-14 px-4" id="hero-area">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-5">
+                Stop Tracking Habits.<br>
+                <span class="hero-gradient-text">Start Actively Intervening.</span>
+            </h1>
+            <p class="text-lg text-graytext max-w-2xl mx-auto mb-9">
                 OptiRoutine reads your environment and energy levels to nudge you at the exact moment you're most likely to slip — not just after you already have.
             </p>
-            <div class="hero-cta-row">
-                <a href="dashboard.html" class="btn btn-primary" id="btn-hero-cta">Enter Dashboard</a>
-                <a href="#science-framework" class="btn btn-secondary" id="btn-hero-secondary">Explore the Science</a>
+            <div class="flex justify-center gap-4 flex-wrap">
+                <a href="dashboard.html" id="btn-hero-cta"
+                   class="bg-purple1 hover:bg-purple2 text-white font-semibold px-6 py-3 rounded-lg no-underline">
+                    Enter Dashboard
+                </a>
+                <a href="#science-framework" id="btn-hero-secondary"
+                   class="border border-white/20 hover:bg-white/10 text-lighttext font-semibold px-6 py-3 rounded-lg no-underline">
+                    Explore the Science
+                </a>
             </div>
         </section>
 
-        <section id="science-framework" class="science-section">
-            <h2 class="science-heading">
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-5 mt-8">
+            <div class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-5 text-center">
+                <p class="text-3xl font-bold text-purple1">2.5x</p>
+                <p class="text-sm text-graytext mt-1">More likely to act on a planned trigger</p>
+            </div>
+            <div class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-5 text-center">
+                <p class="text-3xl font-bold text-purple1">66</p>
+                <p class="text-sm text-graytext mt-1">Average days for a habit to stick</p>
+            </div>
+            <div class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-5 text-center">
+                <p class="text-3xl font-bold text-purple1">5 min</p>
+                <p class="text-sm text-graytext mt-1">Micro-task fallback on low energy days</p>
+            </div>
+            <div class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-5 text-center">
+                <p class="text-3xl font-bold text-purple1">0</p>
+                <p class="text-sm text-graytext mt-1">Accounts needed, it all saves in your browser</p>
+            </div>
+        </section>
+
+        <section id="science-framework" class="mt-20">
+            <h2 class="text-3xl font-bold text-center mb-11">
                 The Science of <span class="hero-gradient-text">Cognitive Architecture</span>
             </h2>
 
-            <div class="features-grid">
-                <div class="glass-card feature-card" id="card-fogg">
-                    <div class="feature-icon">🛠️</div>
-                    <h3>Fogg Behavior Model</h3>
-                    <p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card bg-cardbg/60 border border-white/10 hover:border-purple1/40 rounded-xl p-6" id="card-fogg">
+                    <div class="text-3xl mb-3">🛠️</div>
+                    <h3 class="text-lg font-semibold mb-2">Fogg Behavior Model</h3>
+                    <p class="text-graytext text-[15px]">
                         When your sleep debt is high, OptiRoutine swaps a demanding session for a 5-minute micro-task instead — lowering the bar just enough to keep the streak alive.
                     </p>
                 </div>
-                <div class="glass-card feature-card" id="card-loss-aversion">
-                    <div class="feature-icon">🔥</div>
-                    <h3>Loss Aversion</h3>
-                    <p>
+                <div class="glass-card bg-cardbg/60 border border-white/10 hover:border-purple1/40 rounded-xl p-6" id="card-loss-aversion">
+                    <div class="text-3xl mb-3">🔥</div>
+                    <h3 class="text-lg font-semibold mb-2">Loss Aversion</h3>
+                    <p class="text-graytext text-[15px]">
                         Losing feels twice as sharp as winning feels good. OptiRoutine's prompts lean into that — framed around protecting the streak you've already built, not starting a new one.
                     </p>
                 </div>
-                <div class="glass-card feature-card" id="card-implementation">
-                    <div class="feature-icon">📌</div>
-                    <h3>Implementation Intentions</h3>
-                    <p>
+                <div class="glass-card bg-cardbg/60 border border-white/10 hover:border-purple1/40 rounded-xl p-6" id="card-implementation">
+                    <div class="text-3xl mb-3">📌</div>
+                    <h3 class="text-lg font-semibold mb-2">Implementation Intentions</h3>
+                    <p class="text-graytext text-[15px]">
                         Set the trigger once — "If it's 6 PM, open the editor" — and the decision is already made before willpower even enters the picture.
                     </p>
                 </div>
-                <div class="glass-card feature-card" id="card-biometrics">
-                    <div class="feature-icon">📡</div>
-                    <h3>Biometric Context</h3>
-                    <p>
+                <div class="glass-card bg-cardbg/60 border border-white/10 hover:border-purple1/40 rounded-xl p-6" id="card-biometrics">
+                    <div class="text-3xl mb-3">📡</div>
+                    <h3 class="text-lg font-semibold mb-2">Biometric Context</h3>
+                    <p class="text-graytext text-[15px]">
                         Sleep quality and task performance get correlated over time, so nudges land when your energy is actually there to act on them.
                     </p>
                 </div>
             </div>
         </section>
+
+        <section class="mt-20">
+            <h2 class="text-3xl font-bold text-center mb-11">How It <span class="hero-gradient-text">Works</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-6">
+                    <p class="text-purple1 font-bold mb-2">STEP 1</p>
+                    <h3 class="text-lg font-semibold mb-2">Build your routines</h3>
+                    <p class="text-graytext text-[15px]">Add each habit with a time and an "if this, then that" trigger so your brain has nothing left to decide.</p>
+                </div>
+                <div class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-6">
+                    <p class="text-purple1 font-bold mb-2">STEP 2</p>
+                    <h3 class="text-lg font-semibold mb-2">Log your energy</h3>
+                    <p class="text-graytext text-[15px]">Tell the dashboard how you're feeling. Low energy days get an easier version of the same habit.</p>
+                </div>
+                <div class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-6">
+                    <p class="text-purple1 font-bold mb-2">STEP 3</p>
+                    <h3 class="text-lg font-semibold mb-2">Watch the streak</h3>
+                    <p class="text-graytext text-[15px]">The analytics page shows where you keep slipping, so you can fix the routine instead of blaming yourself.</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="dashboard.html" class="bg-purple1 hover:bg-purple2 text-white font-semibold px-6 py-3 rounded-lg no-underline inline-block">
+                    Start My First Day
+                </a>
+            </div>
+        </section>
+
     </main>
 
-    <footer>
+    <footer class="border-t border-white/10 py-6 text-center text-xs text-graytext mt-10">
         <p>&copy; 2026 OptiRoutine</p>
     </footer>
 
