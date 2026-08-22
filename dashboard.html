@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | OptiRoutine</title>
+    <meta name="description" content="Your OptiRoutine dashboard - todays routines, your energy level and the next nudge.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0a0612',
+                        cardbg: '#140f23',
+                        lighttext: '#f3f0f7',
+                        graytext: '#a39bb8',
+                        purple1: '#9d4edd',
+                        purple2: '#7b2cbf'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="bg-darkbg text-lighttext leading-relaxed">
+
+    <header class="sticky top-0 z-50 bg-darkbg/80 backdrop-blur border-b border-white/10 py-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center px-6">
+            <a href="index.html" class="text-2xl font-bold text-lighttext no-underline" id="brand-logo">
+                ⚡ <span class="text-purple1">OptiRoutine</span>
+            </a>
+            <ul class="flex gap-6 list-none text-sm font-medium">
+                <li><a href="index.html" class="text-graytext hover:text-white" id="nav-home">Home</a></li>
+                <li><a href="dashboard.html" class="text-white underline" id="nav-dashboard">Dashboard</a></li>
+                <li><a href="routines.html" class="text-graytext hover:text-white" id="nav-routines">Routines</a></li>
+                <li><a href="analytics.html" class="text-graytext hover:text-white" id="nav-analytics">Analytics</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-5 py-10">
+
+        <div class="mb-8">
+            <p class="text-graytext text-sm" id="today-date">Loading the date...</p>
+            <h1 class="text-3xl font-bold mt-1" id="greeting">Hello 👋</h1>
+        </div>
+
+        <section class="glass-card bg-gradient-to-r from-purple2/40 to-cardbg border border-purple1/40 rounded-xl p-6 mb-8" id="nudge-box">
+            <p class="text-xs uppercase tracking-widest text-purple1 font-bold mb-2">Live intervention</p>
+            <h2 class="text-xl font-semibold mb-2" id="nudge-title">...</h2>
+            <p class="text-graytext text-[15px] mb-4" id="nudge-text">...</p>
+            <button id="nudge-btn" class="bg-purple1 hover:bg-purple2 text-white font-semibold px-5 py-2 rounded-lg text-sm">
+                Start now
+            </button>
+        </section>
+
+        <section class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-6 mb-8">
+            <h2 class="text-lg font-semibold mb-1">How is your energy today?</h2>
+            <p class="text-graytext text-sm mb-4">This changes how hard the app makes your tasks.</p>
+            <div class="flex gap-3 flex-wrap">
+                <button onclick="pickEnergy('low')" id="energy-low"
+                        class="energy-btn border border-white/20 hover:bg-white/10 px-4 py-2 rounded-lg text-sm">😴 Low</button>
+                <button onclick="pickEnergy('medium')" id="energy-medium"
+                        class="energy-btn border border-white/20 hover:bg-white/10 px-4 py-2 rounded-lg text-sm">🙂 Medium</button>
+                <button onclick="pickEnergy('high')" id="energy-high"
+                        class="energy-btn border border-white/20 hover:bg-white/10 px-4 py-2 rounded-lg text-sm">⚡ High</button>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-8">
+            <div class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-5">
+                <p class="text-graytext text-xs uppercase tracking-wide">Current streak</p>
+                <p class="text-3xl font-bold text-purple1 mt-1" id="stat-streak">0</p>
+                <p class="text-graytext text-xs">days in a row</p>
+            </div>
+            <div class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-5">
+                <p class="text-graytext text-xs uppercase tracking-wide">Done today</p>
+                <p class="text-3xl font-bold text-purple1 mt-1" id="stat-today">0/0</p>
+                <p class="text-graytext text-xs">routines checked</p>
+            </div>
+            <div class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-5">
+                <p class="text-graytext text-xs uppercase tracking-wide">Consistency</p>
+                <p class="text-3xl font-bold text-purple1 mt-1" id="stat-consistency">0%</p>
+                <p class="text-graytext text-xs">last 7 days</p>
+            </div>
+            <div class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-5">
+                <p class="text-graytext text-xs uppercase tracking-wide">Best streak</p>
+                <p class="text-3xl font-bold text-purple1 mt-1" id="stat-best">0</p>
+                <p class="text-graytext text-xs">personal record</p>
+            </div>
+        </section>
+
+        <section class="mb-8">
+            <div class="flex justify-between text-sm mb-2">
+                <p class="font-medium">Today's progress</p>
+                <p class="text-graytext" id="progress-label">0%</p>
+            </div>
+            <div class="w-full bg-white/10 rounded-full h-3">
+                <div id="progress-bar" class="bg-purple1 h-3 rounded-full" style="width: 0%"></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">Today's Routines</h2>
+                <a href="routines.html" class="text-purple1 text-sm no-underline hover:underline">Edit routines →</a>
+            </div>
+
+            <div id="routine-list" class="flex flex-col gap-4">
+            </div>
+        </section>
+
+        <section class="mt-10">
+            <h2 class="text-2xl font-bold mb-4">Last 7 Days</h2>
+            <div id="week-strip" class="flex gap-3 flex-wrap">
+            </div>
+            <p class="text-graytext text-xs mt-3">A day turns purple when you finish at least half of your routines.</p>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-white/10 py-6 text-center text-xs text-graytext mt-10">
+        <p>&copy; 2026 OptiRoutine</p>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        /* ---------- dashboard page code ---------- */
+
+        function showDate() {
+            var d = new Date();
+            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById("today-date").innerHTML = d.toLocaleDateString('en-US', options);
+
+            var hour = d.getHours();
+            var greeting = "Good evening";
+            if (hour < 12) { greeting = "Good morning"; }
+            else if (hour < 18) { greeting = "Good afternoon"; }
+            document.getElementById("greeting").innerHTML = greeting + " 👋";
+        }
+
+        function drawRoutines() {
+            var routines = getRoutines();
+            var box = document.getElementById("routine-list");
+            var energy = getTodayEnergy();
+
+            if (routines.length == 0) {
+                box.innerHTML = '<div class="bg-cardbg/60 border border-white/10 rounded-xl p-8 text-center text-graytext">' +
+                    'You have no routines yet. <a href="routines.html" class="text-purple1">Add your first one</a>.</div>';
+                return;
+            }
+
+            var html = "";
+            for (var i = 0; i < routines.length; i++) {
+                var r = routines[i];
+                var done = isDone(r.id);
+
+                var showTrigger = r.trigger;
+                if (energy == "low" && r.difficulty != "easy") {
+                    showTrigger = "🪶 Low energy version: " + r.micro;
+                }
+
+                var tickClass = "border-white/20";
+                var tick = "";
+                if (done == true) {
+                    tickClass = "bg-purple1 border-purple1";
+                    tick = "✓";
+                }
+
+                var titleClass = "font-semibold text-lg";
+                if (done == true) {
+                    titleClass = titleClass + " task-done";
+                }
+
+                html = html +
+                '<div class="glass-card bg-cardbg/60 border border-white/10 hover:border-purple1/40 rounded-xl p-5 flex items-start gap-4">' +
+                    '<button onclick="tickRoutine(' + r.id + ')" title="Mark as done" class="mt-1 w-7 h-7 rounded-md border-2 ' + tickClass + ' text-white text-sm flex-shrink-0">' + tick + '</button>' +
+                    '<div class="flex-1">' +
+                        '<div class="flex items-center gap-2 flex-wrap">' +
+                            '<span class="text-xl">' + safeText(r.icon) + '</span>' +
+                            '<h3 class="' + titleClass + '">' + safeText(r.name) + '</h3>' +
+                            '<span class="text-xs px-2 py-1 rounded-full ' + difficultyColour(r.difficulty) + '">' + safeText(r.difficulty) + '</span>' +
+                        '</div>' +
+                        '<p class="text-graytext text-sm mt-2">' + safeText(showTrigger) + '</p>' +
+                    '</div>' +
+                    '<p class="text-graytext text-sm whitespace-nowrap">' + niceTime(r.time) + '</p>' +
+                '</div>';
+            }
+            box.innerHTML = html;
+        }
+
+        function tickRoutine(id) {
+            toggleDone(id);
+            drawEverything();
+        }
+
+        function pickEnergy(level) {
+            var energy = getEnergy();
+            energy[getToday()] = level;
+            saveEnergy(energy);
+            drawEverything();
+        }
+
+        function paintEnergyButtons() {
+            var picked = getTodayEnergy();
+            var levels = ["low", "medium", "high"];
+            for (var i = 0; i < levels.length; i++) {
+                var btn = document.getElementById("energy-" + levels[i]);
+                if (levels[i] == picked) {
+                    btn.className = "energy-btn bg-purple1 border border-purple1 px-4 py-2 rounded-lg text-sm text-white";
+                } else {
+                    btn.className = "energy-btn border border-white/20 hover:bg-white/10 px-4 py-2 rounded-lg text-sm";
+                }
+            }
+        }
+
+        function drawStats() {
+            var routines = getRoutines();
+            var done = getDoneToday().length;
+            if (done > routines.length) {
+                done = routines.length;
+            }
+
+            document.getElementById("stat-streak").innerHTML = getStreak();
+            document.getElementById("stat-today").innerHTML = done + "/" + routines.length;
+            document.getElementById("stat-consistency").innerHTML = getConsistency(7) + "%";
+            document.getElementById("stat-best").innerHTML = getBestStreak();
+
+            var percent = 0;
+            if (routines.length > 0) {
+                percent = Math.round((done / routines.length) * 100);
+            }
+            document.getElementById("progress-bar").style.width = percent + "%";
+            document.getElementById("progress-label").innerHTML = percent + "% complete";
+        }
+
+        function drawWeek() {
+            var box = document.getElementById("week-strip");
+            var html = "";
+            for (var i = 6; i >= 0; i--) {
+                var d = new Date();
+                d.setDate(d.getDate() - i);
+                var good = dayIsGood(dateToText(d));
+
+                var colour = "bg-cardbg/60 border-white/10 text-graytext";
+                if (good == true) {
+                    colour = "bg-purple1/30 border-purple1 text-white";
+                }
+
+                html = html +
+                '<div class="border ' + colour + ' rounded-xl px-4 py-3 text-center min-w-[70px]">' +
+                    '<p class="text-xs">' + shortDayName(d) + '</p>' +
+                    '<p class="text-lg font-bold">' + d.getDate() + '</p>' +
+                '</div>';
+            }
+            box.innerHTML = html;
+        }
+
+        function drawNudge() {
+            var nudge = makeNudge();
+            document.getElementById("nudge-title").innerHTML = safeText(nudge.title);
+            document.getElementById("nudge-text").innerHTML = safeText(nudge.text);
+            document.getElementById("nudge-btn").innerHTML = safeText(nudge.action);
+        }
+
+        document.getElementById("nudge-btn").onclick = function () {
+            var routines = getRoutines();
+            for (var i = 0; i < routines.length; i++) {
+                if (isDone(routines[i].id) == false) {
+                    toggleDone(routines[i].id);
+                    break;
+                }
+            }
+            drawEverything();
+        };
+
+        function drawEverything() {
+            drawRoutines();
+            drawStats();
+            drawWeek();
+            drawNudge();
+            paintEnergyButtons();
+        }
+
+        showDate();
+        drawEverything();
+    </script>
+</body>
+</html>
