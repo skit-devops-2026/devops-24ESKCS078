@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routines | OptiRoutine</title>
+    <meta name="description" content="Build your OptiRoutine habits with a time, a difficulty and an implementation intention trigger.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0a0612',
+                        cardbg: '#140f23',
+                        lighttext: '#f3f0f7',
+                        graytext: '#a39bb8',
+                        purple1: '#9d4edd',
+                        purple2: '#7b2cbf'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="bg-darkbg text-lighttext leading-relaxed">
+
+    <header class="sticky top-0 z-50 bg-darkbg/80 backdrop-blur border-b border-white/10 py-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center px-6">
+            <a href="index.html" class="text-2xl font-bold text-lighttext no-underline" id="brand-logo">
+                ⚡ <span class="text-purple1">OptiRoutine</span>
+            </a>
+            <ul class="flex gap-6 list-none text-sm font-medium">
+                <li><a href="index.html" class="text-graytext hover:text-white" id="nav-home">Home</a></li>
+                <li><a href="dashboard.html" class="text-graytext hover:text-white" id="nav-dashboard">Dashboard</a></li>
+                <li><a href="routines.html" class="text-white underline" id="nav-routines">Routines</a></li>
+                <li><a href="analytics.html" class="text-graytext hover:text-white" id="nav-analytics">Analytics</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-5 py-10">
+
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold">My Routines</h1>
+            <p class="text-graytext mt-2 max-w-2xl">
+                Every routine needs a trigger. Write it like "After I ___, I will ___" so the decision is already made before you have to make it.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <section class="lg:col-span-1">
+                <div class="glass-card bg-cardbg/60 border border-white/10 rounded-xl p-6 sticky top-24">
+                    <h2 class="text-xl font-semibold mb-4">Add a routine</h2>
+
+                    <form id="routine-form">
+                        <label class="block text-sm mb-1">Name</label>
+                        <input type="text" id="input-name" placeholder="Deep Work Block" required
+                               class="w-full bg-darkbg border border-white/20 rounded-lg px-3 py-2 mb-4 text-sm outline-none focus:border-purple1">
+
+                        <label class="block text-sm mb-1">Emoji</label>
+                        <input type="text" id="input-icon" placeholder="🧠" maxlength="2"
+                               class="w-full bg-darkbg border border-white/20 rounded-lg px-3 py-2 mb-4 text-sm outline-none focus:border-purple1">
+
+                        <label class="block text-sm mb-1">Time</label>
+                        <input type="time" id="input-time" value="09:00" required
+                               class="w-full bg-darkbg border border-white/20 rounded-lg px-3 py-2 mb-4 text-sm outline-none focus:border-purple1">
+
+                        <label class="block text-sm mb-1">Difficulty</label>
+                        <select id="input-difficulty"
+                                class="w-full bg-darkbg border border-white/20 rounded-lg px-3 py-2 mb-4 text-sm outline-none focus:border-purple1">
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+
+                        <label class="block text-sm mb-1">Trigger</label>
+                        <textarea id="input-trigger" rows="2" placeholder="After I pour my coffee, I open the editor."
+                                  class="w-full bg-darkbg border border-white/20 rounded-lg px-3 py-2 mb-4 text-sm outline-none focus:border-purple1"></textarea>
+
+                        <label class="block text-sm mb-1">5 minute version</label>
+                        <input type="text" id="input-micro" placeholder="Write one line."
+                               class="w-full bg-darkbg border border-white/20 rounded-lg px-3 py-2 mb-5 text-sm outline-none focus:border-purple1">
+
+                        <button type="submit" class="w-full bg-purple1 hover:bg-purple2 text-white font-semibold px-5 py-2 rounded-lg text-sm">
+                            Add Routine
+                        </button>
+                    </form>
+
+                    <button onclick="resetAll()" class="w-full border border-white/20 hover:bg-white/10 px-5 py-2 rounded-lg text-sm mt-3">
+                        Reset everything
+                    </button>
+                </div>
+            </section>
+
+            <section class="lg:col-span-2">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">Saved routines</h2>
+                    <p class="text-graytext text-sm" id="routine-count">0 routines</p>
+                </div>
+
+                <div id="saved-list" class="flex flex-col gap-4"></div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer class="border-t border-white/10 py-6 text-center text-xs text-graytext mt-10">
+        <p>&copy; 2026 OptiRoutine</p>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        function drawSaved() {
+            var routines = getRoutines();
+            var box = document.getElementById("saved-list");
+            document.getElementById("routine-count").innerHTML = routines.length + " routines";
+
+            if (routines.length == 0) {
+                box.innerHTML = '<div class="bg-cardbg/60 border border-white/10 rounded-xl p-10 text-center text-graytext">' +
+                    'Nothing here yet. Add your first routine with the form.</div>';
+                return;
+            }
+
+            var html = "";
+            for (var i = 0; i < routines.length; i++) {
+                var r = routines[i];
+                var micro = r.micro;
+                if (micro == "" || micro == undefined) {
+                    micro = "no micro version set";
+                }
+
+                html = html +
+                '<div class="glass-card bg-cardbg/60 border border-white/10 hover:border-purple1/40 rounded-xl p-5">' +
+                    '<div class="flex justify-between items-start gap-4">' +
+                        '<div class="flex items-center gap-3">' +
+                            '<span class="text-2xl">' + safeText(r.icon) + '</span>' +
+                            '<div>' +
+                                '<h3 class="font-semibold text-lg">' + safeText(r.name) + '</h3>' +
+                                '<p class="text-graytext text-sm">' + niceTime(r.time) + '</p>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="flex items-center gap-2">' +
+                            '<span class="text-xs px-2 py-1 rounded-full ' + difficultyColour(r.difficulty) + '">' + safeText(r.difficulty) + '</span>' +
+                            '<button onclick="deleteRoutine(' + r.id + ')" class="text-graytext hover:text-red-400 text-sm border border-white/20 rounded-lg px-3 py-1">Delete</button>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="border-t border-white/10 mt-4 pt-4">' +
+                        '<p class="text-sm"><span class="text-purple1">Trigger:</span> ' + safeText(r.trigger) + '</p>' +
+                        '<p class="text-sm text-graytext mt-1"><span class="text-purple1">Low energy:</span> ' + safeText(micro) + '</p>' +
+                    '</div>' +
+                '</div>';
+            }
+            box.innerHTML = html;
+        }
+
+        document.getElementById("routine-form").onsubmit = function (e) {
+            e.preventDefault();
+
+            var routines = getRoutines();
+
+            var newId = 1;
+            for (var i = 0; i < routines.length; i++) {
+                if (routines[i].id >= newId) {
+                    newId = routines[i].id + 1;
+                }
+            }
+
+            var icon = document.getElementById("input-icon").value.trim();
+            if (icon == "") {
+                icon = "✅";
+            }
+
+            var trigger = document.getElementById("input-trigger").value.trim();
+            if (trigger == "") {
+                trigger = "No trigger set yet, try adding one.";
+            }
+
+            var name = document.getElementById("input-name").value.trim();
+            if (name == "") {
+                alert("Give your routine a name first.");
+                return;
+            }
+
+            var newRoutine = {
+                id: newId,
+                icon: icon,
+                name: name,
+                time: document.getElementById("input-time").value,
+                difficulty: document.getElementById("input-difficulty").value,
+                trigger: trigger,
+                micro: document.getElementById("input-micro").value.trim()
+            };
+
+            routines.push(newRoutine);
+            routines.sort(function (a, b) {
+                if (a.time < b.time) { return -1; }
+                if (a.time > b.time) { return 1; }
+                return 0;
+            });
+            saveRoutines(routines);
+
+            document.getElementById("routine-form").reset();
+            document.getElementById("input-time").value = "09:00";
+            drawSaved();
+        };
+
+        function deleteRoutine(id) {
+            var sure = confirm("Delete this routine?");
+            if (sure == false) {
+                return;
+            }
+
+            var routines = getRoutines();
+            var kept = [];
+            for (var i = 0; i < routines.length; i++) {
+                if (routines[i].id != id) {
+                    kept.push(routines[i]);
+                }
+            }
+            saveRoutines(kept);
+            removeFromHistory(id);
+            drawSaved();
+        }
+
+        function resetAll() {
+            var sure = confirm("This deletes your routines and all your history. Are you sure?");
+            if (sure == false) {
+                return;
+            }
+            localStorage.removeItem("optiroutine_routines");
+            localStorage.removeItem("optiroutine_history");
+            localStorage.removeItem("optiroutine_energy");
+            drawSaved();
+        }
+
+        drawSaved();
+    </script>
+</body>
+</html>
