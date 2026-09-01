@@ -3,10 +3,10 @@ pipeline {
     
     stages {
         stage('Checkout') {
-            steps {
-                git 'https://github.com/AyushmanDev04/optilife.git'
-            }
-        }
+    steps {
+        git branch: 'main', url: 'https://github.com/AyushmanDev04/optilife.git'
+    }
+}
         
         stage('Build') {
             steps {
