@@ -28,6 +28,10 @@ make install
 make run
 ```
 
+## Testing
+
+Run `npm test` to run the automated tests.
+
 ## Live URL
 
 https://github.com/skit-devops-2026/devops-24ESKCS078.git
