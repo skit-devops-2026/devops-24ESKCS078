@@ -37,3 +37,4 @@ https://github.com/skit-devops-2026/devops-24ESKCS078.git
 `GET /health` returns the running commit SHA. See `Makefile` and the milestone
 sheet for why this is required.
 # CI improvements
+# Enhanced README for deployment guides
