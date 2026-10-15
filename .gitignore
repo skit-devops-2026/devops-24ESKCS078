@@ -221,3 +221,6 @@ __marimo__/
 
 # MongoDB local backup
 Optilife-ht/backend/mongodb-backup/
+
+node_modules/
+.DS_Store
