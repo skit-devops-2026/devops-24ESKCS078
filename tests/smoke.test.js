@@ -3,7 +3,7 @@ const assert = require('node:assert');
 const fs = require('fs');
 
 test('index.html exists', () => {
-  assert.ok(fs.existsSync('index.html'));
+  assert.ok(fs.existsSync('Optilife-ht/frontend/index.html'));
 });
 
 test('Makefile exists', () => {
