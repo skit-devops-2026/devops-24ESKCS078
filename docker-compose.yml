@@ -24,7 +24,7 @@ services:
     environment:
       PORT: 5003
       MONGO_URI: mongodb://mongo:27017/habit_tracker
-      CLIENT_URL: http://localhost:8080
+      CLIENT_URL: http://localhost:8081
     depends_on:
       mongo:
         condition: service_healthy
