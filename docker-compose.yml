@@ -52,6 +52,17 @@ services:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     depends_on:
       - backend
+  grafana:
+    image: grafana/grafana:latest
+    container_name: optilife-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus 
 
 volumes:
   mongo_data:
+  grafana_data:
