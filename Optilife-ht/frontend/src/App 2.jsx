@@ -9,7 +9,6 @@ import Routines from './pages/Routines.jsx';
 import Analytics from './pages/Analytics.jsx';
 import Settings from './pages/Settings.jsx';
 
-// Shared page layout: navigation bar, the page itself, and the reminder checker
 function Layout() {
   return (
     <div className="app-shell">

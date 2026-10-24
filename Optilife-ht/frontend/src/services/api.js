@@ -1,5 +1,3 @@
-// Small wrapper around fetch.
-// It adds the login token to every request and turns errors into thrown Error objects.
 
 export async function apiRequest(path, options = {}) {
   const token = localStorage.getItem('habitToken');
@@ -15,7 +13,7 @@ export async function apiRequest(path, options = {}) {
 
   const data = await response.json().catch(() => ({}));
 
-  // If the token has expired, send the user back to the login page
+ 
   if (response.status === 401 && path !== '/api/auth/login') {
     localStorage.removeItem('habitToken');
     window.location.href = '/login';
