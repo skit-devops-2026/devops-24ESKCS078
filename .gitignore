@@ -224,3 +224,4 @@ Optilife-ht/backend/mongodb-backup/
 
 node_modules/
 .DS_Store
+node_modules/
