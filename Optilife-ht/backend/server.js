@@ -31,6 +31,11 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+// Required by the README: returns the commit SHA this build was made from
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', commit: process.env.GIT_SHA || 'unknown' });
+});
+
 // Prometheus metrics endpoint
 app.get('/metrics', async (req, res) => {
   try {
