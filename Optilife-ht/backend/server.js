@@ -74,17 +74,21 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Server port
-const PORT = process.env.PORT || 5000;
+// Export the app so tests can call it without starting the server
+module.exports = app;
 
-// Connect database and start server
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+// Only connect to the database and listen when run directly (node server.js)
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+
+  connectDB()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+      });
+    })
+    .catch((error) => {
+      console.error('Database connection failed:', error);
+      process.exit(1);
     });
-  })
-  .catch((error) => {
-    console.error('Database connection failed:', error);
-    process.exit(1);
-  });
+}

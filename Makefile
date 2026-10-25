@@ -10,6 +10,8 @@ install:
 
 test:
 	npm test
+	cd Optilife-ht/backend && npm test
+	cd Optilife-ht/frontend && npm test
 
 build:
 	cd Optilife-ht/frontend && npm run build
