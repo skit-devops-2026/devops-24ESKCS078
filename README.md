@@ -1,6 +1,6 @@
 # optilife
 
-# frontend  : https://devops-24eskcs078-1.onrender.com
+
 
 updated on September 5
 
